@@ -11,12 +11,12 @@
     5.3.  Median: `np.median(data)`
 6.  Visualize data
     6.1.  Feature at a time:
-          `for i in range(len(data[0])) 
-             `pyplot.plot(data[:,i]))
+          `for i in range(len(data[0]))` 
+             `pyplot.plot(data[:,i]))`
     6.2.  Compare 2 features at a time
-          `j = 0
-          `for i in range(len(data[0])) 
-              `for j in range((i+j),len(data[0])) 
-                `pyplot.skatter(data[:,i], data[:,j]))
+          `j = 0`
+          `for i in range(len(data[0]))` 
+              `for j in range((i+j),len(data[0]))` 
+                `pyplot.skatter(data[:,i], data[:,j]))`
                 
           
