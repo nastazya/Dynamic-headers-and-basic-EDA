@@ -1,9 +1,9 @@
 # class5_homework
 
-1) Download the data to local directory:
+*1) Download the data to local directory:*
 
-2) Set up dynamic file input using `argparse`:
-	- `parser.add_argument("file_name")   # positional argument`
+*2) Set up dynamic file input using `argparse`:*
+	`parser.add_argument("file_name")   # positional argument`
 	  `parser.add_argument("-header_name", "--header_name", default="default.txt") # optional header file name`
 	- `file_name = args.file_name`
 	  `if args.header_name:`
