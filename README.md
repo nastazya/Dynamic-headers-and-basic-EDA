@@ -35,13 +35,13 @@
     ```
     	n ← (col_number // 26) + (col_number % 26)
     ```
-    - generate a double-loop to create a header:
+    - generate a double-loop to create a header and add it to dataset:
     ```
-    	header ← []
+	header ← []
         for i in range(1, n+1)
             for j in s
                 header += s[j]*i
-        data.columns ← header[:len(data[0])] 		#assign the number of names equal to number of dataset columns
+        data.columns ← header[:len(data[0])] 	#assign the number of names equal to number of dataset columns
     ```
 	
 **5) Compute summary statistics:**
