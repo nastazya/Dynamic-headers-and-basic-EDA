@@ -28,20 +28,25 @@
   ```
   - else (if we didn't assign a header file):
   ```
-	assign column names automatically:
-        s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters
-        calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name all the columns`
-        if col_number % 26 != 0:
-           n ← col_number // 26 + 1
-        else:
-           n ← col_number // 26
-        _generating a double-loop to create a header_
-        header ← []
+  ```
+  assign column names automatically:
+  ```
+  	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters
+	calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name all the columns
+	if col_number % 26 != 0:
+	    n ← col_number // 26 + 1
+	else:
+	    n ← col_number // 26	    
+  ```
+  generating a double-loop to create a header:
+  ```
+	header ← []
         for i in range(1, n+1)
             for j in s
                 header += s[j]*i
-        data.columns ← header  #will assign header without changing the dimentions
- 
+        data.columns ← header  #will assign header without changing the dimentions  
+  ```
+	
 **5) Compute summary statistics:**
 * Mean: `np.mean(data)`
 * Standart deviation: `np.std(data)`
@@ -59,4 +64,5 @@
         for i in range(len(data[0])) 
             for j in range((i+j),len(data[0])) 
                 pyplot.skatter(data[:,i], data[:,j]))
+```
 				
