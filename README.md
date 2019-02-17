@@ -23,7 +23,7 @@
         `else(if we didn't assign a header file):`
             `assign column names automatically:`
             `s = sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters`
-            `calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name all the columns`
+            `calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name all the 			columns`
             `if col_number % 26 != 0:`
                 `n = col_number // 26 + 1`
             `else:`
