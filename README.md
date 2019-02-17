@@ -13,29 +13,27 @@
 	data = pd.read_csv(file_name, sep='\s+|,', header=None)
 ```
 **4) Add header dynamically:**
-* if file_name = my chosen dataset:
+* if file_name is my chosen dataset:
 ```
-	header ← list on names for my chosen dataset
+	header ← constant list on names for my chosen dataset
 	data.columns ← header 						
 ```
 * for all other datasets:
   - if header_name is a file (we assign a header file):
   ```
-  	read one line from header_name, change it to be able to assign it to a list variable
+  	read one line from header file, change it to be able to assign it to a list variable
   	header ← "clean" string of names from file transformed to a list
-  	obligatory assert to check len(header) = len(data[0])
+  	obligatory assert to check for equal nubmer of dataset columns and header items (len(header) == len(data[0]))
   	data.columns ← header 						
   ```
-  - else (if we didn't assign a header file):
-    - assign column names automatically:
+  - if we didn't assign a header file (else): assign column names automatically:
+    - create a string of alphabetical chars:
     ```
-	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters
-	calculate a var n for the loop to be able to generate a list with non-repetitive chars 
-	like AA or AAA to name all the columns
-	if col_number % 26 != 0:
-	    n ← col_number // 26 + 1
-	else:
-	    n ← col_number // 26    	
+	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'		 # 26 characters    
+    ```
+    - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
+    ```
+    	n ← (col_number // 26) + (col_number % 26)
     ```
     - generate a double-loop to create a header:
     ```
@@ -43,7 +41,7 @@
         for i in range(1, n+1)
             for j in s
                 header += s[j]*i
-        data.columns ← header  #will assign header without changing the dimentions
+        data.columns ← header[:len(data[0])] 		#assign the number of names equal to number of dataset columns
     ```
 	
 **5) Compute summary statistics:**
