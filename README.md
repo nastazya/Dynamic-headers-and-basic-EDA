@@ -1,15 +1,19 @@
 # class5_homework
 
+1) Download the data to local directory:
 
-1.  Download the data to local directory.
-2.  Set up dynamic file input using `argparse`:
-    `parser.add_argument("file_name")   # positional argument`
+2) Set up dynamic file input using `argparse`:
+	- `parser.add_argument("file_name")   # positional argument`
 	  `parser.add_argument("-header_name", "--header_name", default="default.txt") # optional header file name`
-    `file_name = args.file_name`
+	- `file_name = args.file_name`
 	  `if args.header_name:`
-      `header_name = args.header_name`
-3.  Load the data into the DataFrame:
-    `data = pd.read_csv(file_name, sep='\s+|,', header=None)`
+	- `header_name = args.header_name`
+3) Load the data into the DataFrame:
+	- `data = pd.read_csv(file_name, sep='\s+|,', header=None)`
+
+
+3.  
+    
 4.  Add header dynamically:
     `if file_name == 'wdbc.data':`
         `header = my custom string for my chosen dataset`
