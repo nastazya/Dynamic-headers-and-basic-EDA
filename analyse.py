@@ -40,18 +40,16 @@ def find_mean_std(P):
 
 
 #Assigning file names to local variables
-f1, f2 = parser_assign()
-print(f1, f2)
-data_file = f1
-header_file = f2
-
+data_file, header_file = parser_assign()
 assert os.path.isfile(data_file), 'Not valid file'
 print('File is assigned: ', data_file)
 print('Header file is: ', header_file)
 
+
 #Reading data from file to Data Frame
 help(read_data)
 data = read_data(data_file)
+
 
 #Adding header
 
