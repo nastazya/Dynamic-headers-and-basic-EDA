@@ -33,11 +33,11 @@
     ```
     - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
     ```
-    	n ← (col_number // 26) + (col_number % 26)
+    n ← (col_number // 26) + (col_number % 26)
     ```
     - generate a double-loop to create a header and add it to dataset:
     ```
-	header ← []
+    	header ← []
         for i in range(1, n+1)
             for j in s
                 header += s[j]*i
@@ -52,14 +52,14 @@
 **6) Visualize data**
 * Show a hystogramme for one feature at a time and write each image into a file:
 ```
-	for i in range(len(data[0]))
+	for i in range(len(data[0])):
             pyplot.plot(data[:,i]))
 ```
 * Compare 2 features at a time write each image into a file:
 ```
 	j = 0
-        for i in range(len(data[0])) 
-            for j in range((i+j),len(data[0])) 
+        for i in range(len(data[0])):
+            for j in range((i+j),len(data[0])):
                 pyplot.skatter(data[:,i], data[:,j]))
 ```
 				
