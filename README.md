@@ -1,13 +1,14 @@
 # class5_homework
 
-*1) Download the data to local directory:*
+_1) Download the data to local directory:_
 
 *2) Set up dynamic file input using `argparse`:*
-	`parser.add_argument("file_name")   # positional argument`
-	  `parser.add_argument("-header_name", "--header_name", default="default.txt") # optional header file name`
+	- `parser.add_argument("file_name")   # positional argument`
+	- `parser.add_argument("-header_name", "--header_name", default="default.txt") # optional header file name`
 	- `file_name = args.file_name`
-	  `if args.header_name:`
-	- `header_name = args.header_name`
+	- `if args.header_name:`
+	- 	`header_name = args.header_name`
+
 3) Load the data into the DataFrame:
 	- `data = pd.read_csv(file_name, sep='\s+|,', header=None)`
 
