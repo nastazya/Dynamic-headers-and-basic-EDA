@@ -37,19 +37,19 @@
             		`data.columns = header #will assign header without changing the dimentions`
  
 5) Compute summary statistics:
-	5.1 Mean: `np.mean(data)` 
-	5.2 Standart deviation: `np.std(data)`
-	5.3 Median: `np.median(data)`
-
+	- Mean: `np.mean(data)`
+	- Standart deviation: `np.std(data)`
+	- Median: `np.median(data)`
+	
 6) Visualize data
-	6.1 Show a hystogramme for one feature at a time and write each image into a file:
+	- Show a hystogramme for one feature at a time and write each image into a file:
 	    `for i in range(len(data[0]))` 
              	`pyplot.plot(data[:,i]))`
-	6.2 Compare 2 features at a time write each image into a file:
-          `j = 0`
-          `for i in range(len(data[0]))` 
-              `for j in range((i+j),len(data[0]))` 
-                `pyplot.skatter(data[:,i], data[:,j]))`
+	- Compare 2 features at a time write each image into a file:
+          	`j = 0`
+          	`for i in range(len(data[0]))` 
+              		`for j in range((i+j),len(data[0]))` 
+                		`pyplot.skatter(data[:,i], data[:,j]))`
 
                 
           
