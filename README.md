@@ -14,17 +14,16 @@
 ```
 **4) Add header dynamically:**
 - if file_name = 'wdbc.data':
-```
-  	header ← my custom string for my chosen dataset
-       	data.columns ← header` #will assign header without changing the dimentions
-```
+	`header ← my custom string for my chosen dataset
+       	`data.columns ← header` #assign header without changing the dimentions
+
 - for all other datasets:`
-	  	- `if header_name is a file:`
+	  	* if header_name is a file:`
 			`read one line from header_name, change it to be able to assign it to a list variable`
             		`header = "clean" string of names from file`
             		`obligatory assert to check len(header) == len(data[0])`
             		`data.columns = header #will assign header without changing the dimentions`
-		- `else(if we didn't assign a header file):`
+		* else (if we didn't assign a header file):
 			`assign column names automatically:`
             		`s = sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters`
             		`calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name 					all the columns`
