@@ -9,17 +9,16 @@
 	header_name = args.header_name
 ```
 **3) Load the data into the DataFrame:**
-* kfkfk
-* mfmfm
-	-ccc
-	-hhh
-	- `data = pd.read_csv(file_name, sep='\s+|,', header=None)`
-
-4) Add header dynamically:
-	- `if file_name == 'wdbc.data':`
-	  	`header = my custom string for my chosen dataset`
-        	`data.columns = header #will assign header without changing the dimentions`
-	- `for all other datasets:`
+```
+	data = pd.read_csv(file_name, sep='\s+|,', header=None)
+```
+**4) Add header dynamically:**
+- if file_name = 'wdbc.data':
+```
+  	header ← my custom string for my chosen dataset
+       	data.columns ← header` #will assign header without changing the dimentions
+```
+- for all other datasets:`
 	  	- `if header_name is a file:`
 			`read one line from header_name, change it to be able to assign it to a list variable`
             		`header = "clean" string of names from file`
