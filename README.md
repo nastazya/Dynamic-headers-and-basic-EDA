@@ -13,24 +13,29 @@
 	data = pd.read_csv(file_name, sep='\s+|,', header=None)
 ```
 **4) Add header dynamically:**
-- if file_name = 'wdbc.data':
-bla`header ← my custom string for my chosen dataset`
-`data.columns ← header` #assign header without changing the dimentions
-
-- for all other datasets:
-  * if header_name is a file:
-    `read one line from header_name, change it to be able to assign it to a list variable`
-            		`header = "clean" string of names from file`
-            		`obligatory assert to check len(header) == len(data[0])`
-            		`data.columns = header #will assign header without changing the dimentions`
-		* else (if we didn't assign a header file):
-			`assign column names automatically:`
-            		`s = sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters`
-            		`calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name 					all the columns`
-            		`if col_number % 26 != 0:`
-                		`n = col_number // 26 + 1`
-            		`else:`
-                		`n = col_number // 26`
+* if file_name = 'wdbc.data':
+```
+	header ← my custom string for my chosen dataset
+	data.columns ← header` #assign header without changing the dimentions
+```
+* for all other datasets:
+  - if header_name is a file:
+  ```
+  	read one line from header_name, change it to be able to assign it to a list variable`
+  	header = "clean" string of names from file
+  	obligatory assert to check len(header) == len(data[0])
+  	data.columns = header #will assign header without changing the dimentions
+  ```
+  - else (if we didn't assign a header file):
+  assign column names automatically:
+  ```
+	assign column names automatically:
+        s = sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # 26 characters
+        calculate a var n for the loop to be able to generate a list with non-repetitive chars like AA or AAA to name all the columns`
+        if col_number % 26 != 0:
+           n = col_number // 26 + 1
+        else:
+           n = col_number // 26
             		`generating a double-loop to create a header`
             		`header = []`
             		`for i in range(1, n+1)`
