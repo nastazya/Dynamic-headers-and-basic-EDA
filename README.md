@@ -15,45 +15,45 @@
 **4) Set up the header dynamically:**
 ```
 ```
-_4.1. If file_name is my chosen dataset:
+_4.1. If file_name is my chosen dataset:_
 ```
 	header ← constant list on names for my chosen dataset
 	data.columns ← header 						
 ```
 _4.2. For all other datasets:_
-      - Check whether the dataset contains a header
-      ```
-      	csv.Sniffer().has_header(open(file).read(2000))
-      ```
-      - If data contains the header
-      ```
-      	data ← pd.read_csv(file, sep='\s+|,')	#Header is assigned automaticly 
-      ```
-      - If there is no header:
-        * If header_name is a file (we assigned a header file):
-	```
-	read one line from header file, change it to be able to assign it to a list variable
+- Check whether the dataset contains a header
+```
+	csv.Sniffer().has_header(open(file).read(2000))
+```
+- If data contains the header
+```
+	data ← pd.read_csv(file, sep='\s+|,')	#Header is assigned automaticly
+```
+- If there is no header:
+  * If header_name is a file (we assigned a header file):
+  ```
+  	read one line from header file, change it to be able to assign it to a list variable
   	header ← "clean" string of names from file transformed to a list
   	obligatory assert to check for equal nubmer of dataset columns and header items (len(header) == len(data[0]))
-  	data.columns ← header 	
-	```
-	* If we didn't assign a header file (else): assign column names automatically:
-	  - create a string of alphabetical chars:
-	  ```
-	  	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'		 # 26 characters 
-	  ```
-	  - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
-	  ```
-	  	n ← (col_number // 26) + (col_number % 26)
-	  ```
-	  - generate a double-loop to create a header and add it to dataset:
-	  ```
-	  	header ← []
-        	for i in range(1, n+1)
-            	    for j in s
-                	header += s[j]*i
-        	data.columns ← header[:len(data[0])] 	#assign the number of names equal to number of dataset columns
-	  ```
+  	data.columns ← header 
+  ```
+  * If we didn't assign a header file (else): assign column names automatically:
+    - create a string of alphabetical chars:
+    ```
+    	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'		 # 26 characters
+    ```
+    - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
+    ```
+    	n ← (col_number // 26) + (col_number % 26)
+    ```
+    - generate a double-loop to create a header and add it to dataset:
+    ```
+    	header ← []
+        for i in range(1, n+1)
+            for j in s
+               	header += s[j]*i
+        data.columns ← header[:len(data[0])] 	#assign the number of names equal to number of dataset columns
+    ```
 
 **5) Compute summary statistics:**
 * Mean: `np.mean(data)`
