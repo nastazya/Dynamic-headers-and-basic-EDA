@@ -12,8 +12,8 @@
 ```
 	data = pd.read_csv(file_name, sep='\s+|,', header=None)
 ```
-**4) Set up the header dynamically:**
-4.1 check if the dataset contains a header
+**4) Set up the header dynamically:**\n
+_4.1 check if the dataset contains a header_
 ```
 
 ```
