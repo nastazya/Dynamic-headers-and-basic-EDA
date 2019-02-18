@@ -15,7 +15,7 @@
 **4) Set up the header dynamically:**
 ```
 ```
-_4.1. Check if file_name is my chosen dataset:
+_4.1. If file_name is my chosen dataset:
 ```
 	header ← constant list on names for my chosen dataset
 	data.columns ← header 						
