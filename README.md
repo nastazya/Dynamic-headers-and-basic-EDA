@@ -13,7 +13,15 @@
 	data = pd.read_csv(file_name, sep='\s+|,', header=None)
 ```
 **4) Set up the header dynamically:**
-* check if the dataset contains a header
+4.1 check if the dataset contains a header
+```
+
+```
+4.2 If the file contains the header
+```
+
+```
+4.3 If there is no header:
   * if file_name is my chosen dataset:
   ```
 	header ← constant list on names for my chosen dataset
