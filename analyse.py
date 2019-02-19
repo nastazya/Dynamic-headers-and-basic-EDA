@@ -36,11 +36,11 @@ def read_data(file,h_file):
 		del data['ID']					# removing ID column 
 		#data = data.iloc[:10,:5]		# reducing data for testing putposes  
 	
-	elif check_header(file):			# check if data has header
+	elif check_header(file):			# if data has header
 		print("\n Dataset has it's header \n")		
 		data = pd.read_csv(file, sep='\s+|,')
 	
-	elif os.path.isfile(h_file):		#if header file was provided
+	elif os.path.isfile(h_file):		# if header file was provided
 		print("\n Dataset header will be generated from it's provided header file \n")	
 		'''		
 		Add reading header from file
@@ -69,7 +69,8 @@ def read_data(file,h_file):
 
 
 def check_header(file):
-	'''Checking wether the data file contains header'''
+	'''Checking whether the data file contains header'''
+
 	return csv.Sniffer().has_header(open(file).read(3000))
 
 
@@ -92,6 +93,17 @@ def plot_hist(features, name, folder):
 	plt.close('all')
 	
 	
+def plot_scatter(feature1, feature2, name1, name2, folder):
+	'''Scatter for each pair of features'''
+
+	fig = plt.figure()
+	plt.xlabel(name1)
+	plt.ylabel(name2)
+	plt.scatter(feature1, feature2)
+	plt.savefig((f"./{folder}/{name1}-{name2}.pdf"), bbox_inches='tight')
+	plt.close('all')
+	
+	
 #----------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------
 
@@ -111,16 +123,37 @@ print(data)
 '''find_mean_std(data)'''
 
 
-#Plotting histograms
+# Plotting histograms
 '''if not os.path.exists('hist'):
 	os.makedirs('hist')
-
 for col_name in data.columns:
 	#print(data[col_name])
 	print('\n Plotting histogramme for ', col_name)
 	plot_hist(data[col_name], col_name, 'hist')'''
 
 
+# Plotting scatter
+if not os.path.exists('scatter'):
+	os.makedirs('scatter')
+
+if data_file == 'wdbc.data':			# Build the scatter only for mean of each feature (10 first columns out of 30)
+	for i in range(1, 11):
+		j = 1
+		for j in range((i+j),11):
+			col_name1 = data.iloc[:,i].name
+			col_name2 = data.iloc[:,j].name
+			print('\n Plotting scatter for ', col_name1, col_name2)
+			plot_scatter(data[col_name1], data[col_name2], col_name1, col_name2, 'scatter')
+else:
+	for i in range(len(data.iloc[0])):
+		j = 1
+		for j in range((i+j),len(data.iloc[0])):
+			col_name1 = data.iloc[:,i].name
+			col_name2 = data.iloc[:,j].name
+			print('\n Plotting scatter for ', col_name1, col_name2)
+			plot_scatter(data[col_name1], data[col_name2], col_name1, col_name2, 'scatter')
+		
+	
 
 
 
