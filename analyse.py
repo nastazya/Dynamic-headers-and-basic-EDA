@@ -8,6 +8,7 @@ import pandas as pd
 import argparse
 import csv
 import matplotlib.pyplot as plt
+import string
 
 def parser_assign():
 	'''Setting up parser for the file name and header file name '''
@@ -24,7 +25,7 @@ def parser_assign():
 	return file_name, header_name
 
 
-def read_data(file):
+def read_data(file,h_file):
 	'''Copying data from file to Data Frame'''
 
 	if file == 'wdbc.data':				# if this is breast cancer dataset
@@ -35,14 +36,35 @@ def read_data(file):
 		del data['ID']					# removing ID column 
 		#data = data.iloc[:10,:5]		# reducing data for testing putposes  
 	
-	elif check_header(file):			# if header file was given
+	elif check_header(file):			# check if data has header
+		print("\n Dataset has it's header \n")		
 		data = pd.read_csv(file, sep='\s+|,')
 	
-	else:								# if there is no header file
-			data = pd.read_csv(file, sep='\s+|,', header=None)
-			'''
-			Add auto-generate
-			'''
+	elif os.path.isfile(h_file):		#if header file was provided
+		print("\n Dataset header will be generated from it's provided header file \n")	
+		'''		
+		Add reading header from file
+		'''
+	else:								# if there is no header file we generate column names like A, B..., AA, BB...
+		print("\n Dataset doesn't have nether header nor header file. It will be generated automatically \n")	
+		data = pd.read_csv(file, sep='\s+|,', header=None)
+		s = list(string.ascii_uppercase)
+		col_number = len(data.columns)
+		print(col_number)
+		header = s
+		if col_number > len(s):			# if number of columns is greater then 26 
+			if col_number % 26 != 0:
+				n = (col_number // 26) + 1
+			else: n = (col_number // 26)
+			print(n)
+			
+			for i in range(2, n+1):
+				for j in range(len(s)):
+					header += [s[j]*i]
+		#print('auto-header: ',header)
+		#print(header[:len(data.columns)])
+
+		data.columns = header[:len(data.columns)]
 	return data
 
 
@@ -62,7 +84,8 @@ def find_mean_std(P):
 
 
 def plot_hist(features, name, folder):
-	print('\n Plotting histogramme for ', name)
+	'''Histogram for each feature'''
+
 	fig = plt.figure()
 	plt.hist(features)
 	plt.savefig((f"./{folder}/{name}.pdf"), bbox_inches='tight')
@@ -75,26 +98,27 @@ def plot_hist(features, name, folder):
 # Assigning file names to local variables
 data_file, header_file = parser_assign()
 assert os.path.isfile(data_file), '\n Not valid file!!!'
-print('\n Dataset file name: ', data_file)
-print('\n Header file is: ', header_file, '\n')
+
+
 
 
 # Reading data from file to Data Frame
-data = read_data(data_file)
+data = read_data(data_file, header_file)
 print(data)
 
 
 # Calculating summary statistics
-find_mean_std(data)
+'''find_mean_std(data)'''
 
 
 #Plotting histograms
-if not os.path.exists('hist'):
+'''if not os.path.exists('hist'):
 	os.makedirs('hist')
 
 for col_name in data.columns:
 	#print(data[col_name])
-	plot_hist(data[col_name], col_name, 'hist')
+	print('\n Plotting histogramme for ', col_name)
+	plot_hist(data[col_name], col_name, 'hist')'''
 
 
 
