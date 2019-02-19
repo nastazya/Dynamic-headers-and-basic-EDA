@@ -75,9 +75,10 @@ _4.2. For all other datasets:_
 ```
 * Compare 2 features at a time write each image into a file:
 ```
-	j = 0
-        for i in range(len(data[0])):
+	for i in range(len(data[0])):
+	    j = 1
             for j in range((i+j),len(data[0])):
-                pyplot.skatter(data[:,i], data[:,j]))
+                plt.skatter(data[:,i], data[:,j]))
+		plt.savefig((f"./{folder}/{name1}-{name2}.pdf"), bbox_inches='tight') # folder = given folder name; name1, name2 - names of the columns
 ```
 				
