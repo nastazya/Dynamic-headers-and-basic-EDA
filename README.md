@@ -5,8 +5,8 @@
 	parser.add_argument("file_name")    						#positional argument
 	parser.add_argument("-header_name", "--header_name", default="default.txt") 	#optional header file name
 	file_name = args.file_name
-	   if args.header_name:
-	header_name = args.header_name
+	if args.header_name:
+	    header_name = args.header_name
 ```
 **3) Load the data into the DataFrame:**
 ```
@@ -40,19 +40,23 @@ _4.2. For all other datasets:_
   * If we didn't assign a header file (else): assign column names automatically:
     - create a string of alphabetical chars:
     ```
-    	s ← sring.ascii_uppercase #create a 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'		 # 26 characters
+    	s ← list(string.ascii_uppercase) 		# create a list of 26 unique characters
     ```
     - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
     ```
-    	n ← (col_number // 26) + (col_number % 26)
+    	if col_number > len(s):				# if number of columns is bigger then our list of characters
+	    if col_number % 26 != 0:
+		n ← col_number // 26 + 1
+	    else: n ← col_number // 26	
     ```
     - generate a double-loop to create a header and add it to dataset:
     ```
-    	header ← []
-        for i in range(1, n+1)
-            for j in s
-               	header += s[j]*i
-        data.columns ← header[:len(data[0])] 	#assign the number of names equal to number of dataset columns
+    	header ← s					# assign a list of characters to a header list
+	if col_number > len(s):
+	    for i in range(2, n+1):
+	    	for j in range(len(s)):
+		    header += [s[j]*i]
+        data.columns ← header[:len(data.columns)] 	#assign the number of names equal to number of dataset columns
     ```
 
 **5) Compute summary statistics:**
@@ -62,9 +66,12 @@ _4.2. For all other datasets:_
 	
 **6) Visualize data**
 * Show a hystogramme for one feature at a time and write each image into a file:
-```
-	for i in range(len(data[0])):
-            pyplot.plot(data[:,i]))
+```	
+	fig = plt.figure()
+	plt.hist(features)				#build a histogram for each column
+	plt.savefig(f"./{folder}/{name}.pdf")		#save to the custom dir each plot as .pdf with the name of the column
+	plt.close('all')
+	
 ```
 * Compare 2 features at a time write each image into a file:
 ```
