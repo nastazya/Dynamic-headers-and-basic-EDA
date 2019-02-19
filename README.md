@@ -44,14 +44,14 @@ _4.2. For all other datasets:_
     ```
     - calculate a quantity of strings needed to name the columns to be able to generate a list with non-repetitive chars in a loop like AA or AAA to name all the columns
     ```
-    	if col_number > len(s):				# if number of columns is bigger then our list of characters
+	 if col_number > len(s):				# if number of columns is bigger then our list of characters
 	    if col_number % 26 != 0:
 		n ← col_number // 26 + 1
 	    else: n ← col_number // 26	
     ```
     - generate a double-loop to create a header and add it to dataset:
     ```
-    	header ← s					# assign a list of characters to a header list
+	header ← s					# assign a list of characters to a header list
 	if col_number > len(s):
 	    for i in range(2, n+1):
 	    	for j in range(len(s)):
@@ -75,9 +75,10 @@ _4.2. For all other datasets:_
 ```
 * Compare 2 features at a time write each image into a file:
 ```
-	j = 0
-        for i in range(len(data[0])):
+	for i in range(len(data[0])):
+	    j = 1
             for j in range((i+j),len(data[0])):
-                pyplot.skatter(data[:,i], data[:,j]))
+                plt.skatter(data[:,i], data[:,j]))
+		plt.savefig((f"./{folder}/{name1}-{name2}.pdf"), bbox_inches='tight') # folder = given folder name; name1, name2 - names of the columns
 ```
 				
