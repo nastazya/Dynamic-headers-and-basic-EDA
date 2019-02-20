@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-
-
 import os
 import numpy as np
 import pandas as pd
@@ -12,7 +10,6 @@ import string
 
 def parser_assign():
 	'''Setting up parser for the file name and header file name '''
-
 	parser = argparse.ArgumentParser()
 	parser.add_argument("file_name")   # name of the file specified in Dockerfile
 	parser.add_argument("-header_name", "--header_name", default="no_file", help="name of a headers file") #Optional header file name
@@ -27,7 +24,6 @@ def parser_assign():
 
 def read_data(file,h_file):
 	'''Copying data from file to Data Frame'''
-
 	if file == 'wdbc.data':				# if this is breast cancer dataset
 		names = ['ID', 'Diagnosis', 'radius_m', 'texture_m', 'perimeter_m', 'area_m', 'smothness_m', 'compactness_m', 'concavity_m', 'concave_points_m', 'symmetry_m', 'fractal_dim_m', 'radius_s', 'texture_s', 'perimeter_s', 'area_s', 'smothness_s', 'compactness_s', 'concavity_s', 'concave_points_s', 'symmetry_s', 'fractal_dim_s', 'radius_w', 'texture_w', 'perimeter_w', 'area_w', 'smothness_w', 'compactness_w', 'concavity_w', 'concave_points_w', 'symmetry_w', 'fractal_dim_w']
 		data = pd.read_csv(file, sep=',', names=names)
@@ -70,13 +66,11 @@ def read_data(file,h_file):
 
 def check_header(file):
 	'''Checking whether the data file contains header'''
-
 	return csv.Sniffer().has_header(open(file).read(3000))
 
 
 def find_mean_std(P):
 	'''Calculating mean and std for each of 30 features'''
-
 	ave_feature = np.mean(P.iloc[:,2:],axis=0) 				
 	std_feature = np.std(P.iloc[:,2:].astype(float),axis=0) 
 
@@ -84,26 +78,45 @@ def find_mean_std(P):
 	print('\n std of each measurment:\n', std_feature)
 
 
+def plot_histograms(df, columns, n_rows, n_cols):
+	'''Histogram all in one figure'''
+	fig=plt.figure()
+	for i, col_name in enumerate(columns):
+		ax=fig.add_subplot(n_rows,n_cols,i+1)
+		df[col_name].hist(bins=10,ax=ax)
+		ax.set_title(col_name+" Distribution")
+	fig.tight_layout()  # Improves appearance a bit.
+	plt.show()
+
+
 def plot_hist(features, name, folder):
 	'''Histogram for each feature'''
-
 	fig = plt.figure()
 	plt.hist(features)
-	plt.savefig((f"./{folder}/{name}.pdf"), bbox_inches='tight')
+	plt.savefig((f"./{folder}/{name}.png"), bbox_inches='tight')
 	plt.close('all')
-	
-	
+
+
 def plot_scatter(feature1, feature2, name1, name2, folder):
 	'''Scatter for each pair of features'''
-
 	fig = plt.figure()
 	plt.xlabel(name1)
 	plt.ylabel(name2)
 	plt.scatter(feature1, feature2)
-	plt.savefig((f"./{folder}/{name1}-{name2}.pdf"), bbox_inches='tight')
+	plt.savefig((f"./{folder}/{name1}-{name2}.png"), bbox_inches='tight')
 	plt.close('all')
 	
-	
+
+def plot_corr(data_frame, size, folder):
+	''' Plotting correlations'''
+	fig, ax = plt.subplots(figsize=(size, size))
+	ax.matshow(data_frame)
+	plt.xticks(range(len(data_frame.columns)), data_frame.columns)
+	plt.yticks(range(len(data_frame.columns)), data_frame.columns)
+	plt.savefig((f"./{folder}/corr.png"), bbox_inches='tight')
+	plt.close('all')
+
+
 #----------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------
 
@@ -112,24 +125,34 @@ data_file, header_file = parser_assign()
 assert os.path.isfile(data_file), '\n Not valid file!!!'
 
 
-
-
 # Reading data from file to Data Frame
 data = read_data(data_file, header_file)
 print(data)
 
 
 # Calculating summary statistics
-'''find_mean_std(data)'''
+find_mean_std(data)
 
 
 # Plotting histograms
-'''if not os.path.exists('hist'):
+if not os.path.exists('hist'):
 	os.makedirs('hist')
-for col_name in data.columns:
-	#print(data[col_name])
-	print('\n Plotting histogramme for ', col_name)
-	plot_hist(data[col_name], col_name, 'hist')'''
+
+if data_file == 'wdbc.data':
+	print('\n Plotting all histograms into one figure')
+	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns, 4, 3)
+	for col_name in data.columns:
+		if col_name != 'Diagnosis':
+			print('\n Plotting histogramme for ', col_name, ' into /hist/')
+			plot_hist(data[col_name], col_name, 'hist')
+else:
+	print('\n Plotting all histograms into one figure')
+	plot_histograms(data, data.columns, 4, 4)
+	for col_name in data.columns:
+		print('\n Plotting histogramme for ', col_name, ' into /hist/')
+		plot_hist(data[col_name], col_name, 'hist')
+
+
 
 
 # Plotting scatter
@@ -142,7 +165,7 @@ if data_file == 'wdbc.data':			# Build the scatter only for mean of each feature
 		for j in range((i+j),11):
 			col_name1 = data.iloc[:,i].name
 			col_name2 = data.iloc[:,j].name
-			print('\n Plotting scatter for ', col_name1, col_name2)
+			print('\n Plotting scatter for ', col_name1, col_name2, ' into /scatter/')
 			plot_scatter(data[col_name1], data[col_name2], col_name1, col_name2, 'scatter')
 else:
 	for i in range(len(data.iloc[0])):
@@ -150,9 +173,24 @@ else:
 		for j in range((i+j),len(data.iloc[0])):
 			col_name1 = data.iloc[:,i].name
 			col_name2 = data.iloc[:,j].name
-			print('\n Plotting scatter for ', col_name1, col_name2)
+			print('\n Plotting scatter for ', col_name1, col_name2, ' into /scatter/')
 			plot_scatter(data[col_name1], data[col_name2], col_name1, col_name2, 'scatter')
-		
+
+
+# Plotting correlations heatmap
+if data_file == 'wdbc.data':
+	print('\n Plotting correlation hitmap into /corr/ ')
+	if not os.path.exists('corr'):
+		os.makedirs('corr')
+	data_features =data.iloc[:,1:11]
+	plot_corr(data_features.corr(), 10, 'corr')	# Calculating correlation of 10 features and send them to plot
+else:
+	print('\n Plotting correlation hitmap into /corr/ ')
+	if not os.path.exists('corr'):
+		os.makedirs('corr')
+	plot_corr(data.corr(), 10, 'corr')			# Calculating correlation and send them to plot
+	
+	
 	
 
 
