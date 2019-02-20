@@ -81,4 +81,14 @@ _4.2. For all other datasets:_
                 plt.skatter(data[:,i], data[:,j]))
 		plt.savefig((f"./{folder}/{name1}-{name2}.pdf"), bbox_inches='tight') # folder = given folder name; name1, name2 - names of the columns
 ```
+* Build correlation heatmap and write in into a file:
+```
+	data_frame = data.corr()			# Calculates correlations
+	fig, ax = plt.subplots(figsize=(size, size))
+	ax.matshow(data_frame)
+	plt.xticks(range(len(data_frame.columns)), data_frame.columns)
+	plt.yticks(range(len(data_frame.columns)), data_frame.columns)
+	plt.savefig((f"./{folder}/corr.png"), bbox_inches='tight')
+	plt.close('all')
+```
 				
