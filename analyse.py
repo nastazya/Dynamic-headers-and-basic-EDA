@@ -12,14 +12,12 @@ def parser_assign():
 	'''Setting up parser for the file name and header file name '''
 	parser = argparse.ArgumentParser()
 	parser.add_argument("file_name")   # name of the file specified in Dockerfile
-	parser.add_argument("-h", "--header_name", default="no_file", help="name of a headers file") #Optional header file name
+	parser.add_argument("-d", "--header_name", default="no_file", help="name of a headers file") #Optional header file name
 	args = parser.parse_args()
-	
-	file_name = args.file_name
+	f_name = args.file_name
 	if args.header_name:
-		header_name = args.header_name
-	
-	return file_name, header_name
+		h_name = args.header_name
+	return f_name, h_name
 
 
 def read_data(file,h_file):
@@ -38,9 +36,18 @@ def read_data(file,h_file):
 	
 	elif os.path.isfile(h_file):		# if header file was provided
 		print("\n Dataset header will be generated from it's provided header file \n")	
-		'''		
-		Add reading header from file
-		'''
+		#filename='testcsv.csv'
+		# Read column headers (to be variable naames)
+		with open(h_file) as f:
+			firstline = f.readline()                    # Read first line 
+			firstline = firstline.replace("\n","")      # Remove new line characters
+			firstline = firstline.replace(","," ") 		# Remove commas
+			firstline = firstline.replace("  "," ")     # Remove spaces
+			header = list(firstline.split(' '))			# Split string to a list
+			
+			data = pd.read_csv(file, sep='\s+|,', header=None)
+			assert len(data.columns) == len(header), 'Number of columns is not equal to number of column names in header file'
+			data.columns = header
 	else:								# if there is no header file we generate column names like A, B..., AA, BB...
 		print("\n Dataset doesn't have nether header nor header file. It will be generated automatically \n")	
 		data = pd.read_csv(file, sep='\s+|,', header=None)
