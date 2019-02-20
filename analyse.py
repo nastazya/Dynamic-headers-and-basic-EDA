@@ -12,7 +12,7 @@ def parser_assign():
 	'''Setting up parser for the file name and header file name '''
 	parser = argparse.ArgumentParser()
 	parser.add_argument("file_name")   # name of the file specified in Dockerfile
-	parser.add_argument("-header_name", "--header_name", default="no_file", help="name of a headers file") #Optional header file name
+	parser.add_argument("-h", "--header_name", default="no_file", help="name of a headers file") #Optional header file name
 	args = parser.parse_args()
 	
 	file_name = args.file_name
@@ -151,8 +151,6 @@ else:
 	for col_name in data.columns:
 		print('\n Plotting histogramme for ', col_name, ' into /hist/')
 		plot_hist(data[col_name], col_name, 'hist')
-
-
 
 
 # Plotting scatter
