@@ -73,7 +73,9 @@ def read_data(file,h_file):
 
 def check_header(file):
 	'''Checking whether the data file contains header'''
-	return csv.Sniffer().has_header(open(file).read(3000))
+	header_flag = csv.Sniffer().has_header(open(file).read(1024))
+	print('result', header_flag)
+	return header_flag
 
 
 def find_mean_std(P):
@@ -91,8 +93,8 @@ def plot_histograms(df, columns, n_rows, n_cols):
 	for i, col_name in enumerate(columns):
 		ax=fig.add_subplot(n_rows,n_cols,i+1)
 		df[col_name].hist(bins=10,ax=ax)
-		ax.set_title(col_name+" Distribution")
-	fig.tight_layout()  # Improves appearance a bit.
+		ax.set_title(col_name)
+	fig.tight_layout() 
 	plt.show()
 
 
@@ -113,14 +115,13 @@ def plot_scatter(feature1, feature2, name1, name2, folder):
 	plt.savefig((f"./{folder}/{name1}-{name2}.png"), bbox_inches='tight')
 	plt.close('all')
 	
-
-def plot_corr(data_frame, size, folder):
+def plot_corr(data_frame, size, folder, file_n):
 	''' Plotting correlations'''
 	fig, ax = plt.subplots(figsize=(size, size))
 	ax.matshow(data_frame)
 	plt.xticks(range(len(data_frame.columns)), data_frame.columns)
 	plt.yticks(range(len(data_frame.columns)), data_frame.columns)
-	plt.savefig((f"./{folder}/corr.png"), bbox_inches='tight')
+	plt.savefig((f"./{folder}/{file_n}.png"), bbox_inches='tight')
 	plt.close('all')
 
 
@@ -146,16 +147,16 @@ if not os.path.exists('hist'):
 	os.makedirs('hist')
 
 if data_file == 'wdbc.data':
-	print('\n Plotting all histograms into one figure')
+	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
 	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns, 4, 3)
-	for col_name in data.columns:
+	for col_name in data.columns:						#Plotting a histogram for each feature 
 		if col_name != 'Diagnosis':
 			print('\n Plotting histogramme for ', col_name, ' into /hist/')
 			plot_hist(data[col_name], col_name, 'hist')
 else:
-	print('\n Plotting all histograms into one figure')
+	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
 	plot_histograms(data, data.columns, 4, 4)
-	for col_name in data.columns:
+	for col_name in data.columns:						#Plotting a histogram for each feature
 		print('\n Plotting histogramme for ', col_name, ' into /hist/')
 		plot_hist(data[col_name], col_name, 'hist')
 
@@ -188,12 +189,12 @@ if data_file == 'wdbc.data':
 	if not os.path.exists('corr'):
 		os.makedirs('corr')
 	data_features =data.iloc[:,1:11]
-	plot_corr(data_features.corr(), 10, 'corr')	# Calculating correlation of 10 features and send them to plot
+	plot_corr(data_features.corr(), 10, 'corr', data_file)	# Calculating correlation of 10 features and send them to plot
 else:
 	print('\n Plotting correlation hitmap into /corr/ ')
 	if not os.path.exists('corr'):
 		os.makedirs('corr')
-	plot_corr(data.corr(), 10, 'corr')			# Calculating correlation and send them to plot
+	plot_corr(data.corr(), 10, 'corr', data_file)			# Calculating correlation and send them to plot
 	
 	
 	
