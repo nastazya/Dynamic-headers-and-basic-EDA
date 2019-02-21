@@ -65,6 +65,16 @@ _4.2. For all other datasets:_
 * Median: `np.median(data)`
 	
 **6) Visualize data**
+* Show a hystogramme for one all the features in one figure and show it:
+```	
+	fig=plt.figure()
+	for i, col_name in enumerate(data.columns):
+		ax=fig.add_subplot(n_rows,n_cols,i+1)
+		data[col_name].hist(bins=10,ax=ax)
+		ax.set_title(col_name)
+	fig.tight_layout() 
+	plt.show()	
+```
 * Show a hystogramme for one feature at a time and write each image into a file:
 ```	
 	fig = plt.figure()
