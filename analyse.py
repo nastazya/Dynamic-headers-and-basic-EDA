@@ -7,6 +7,7 @@ import argparse
 import csv
 import matplotlib.pyplot as plt
 import string
+import math
 
 def parser_assign():
 	'''Setting up parser for the file name and header file name '''
@@ -46,7 +47,7 @@ def read_data(file,h_file):
 			header = list(firstline.split(' '))			# Split string to a list
 			
 			data = pd.read_csv(file, sep='\s+|,', header=None)
-			assert len(data.columns) == len(header), 'Number of columns is not equal to number of column names in header file'
+			assert len(data.columns) == len(header), 'Number of columns is not equal to number of column names in header file.'
 			data.columns = header
 	else:								# if there is no header file we generate column names like A, B..., AA, BB...
 		print("\n Dataset doesn't have nether header nor header file. It will be generated automatically \n")	
@@ -87,8 +88,13 @@ def find_mean_std(P):
 	print('\n std of each measurment:\n', std_feature)
 
 
-def plot_histograms(df, columns, n_rows, n_cols):
+def plot_histograms(df, columns):
 	'''Histogram all in one figure'''
+	l = len(columns)
+	n_cols = math.ceil(math.sqrt(l))		#Calculating scaling for any number of features
+	n_rows = math.ceil(l / n_cols)
+	print('n_cols = ', n_cols, 'rows = ', n_rows)
+
 	fig=plt.figure()
 	for i, col_name in enumerate(columns):
 		ax=fig.add_subplot(n_rows,n_cols,i+1)
@@ -148,14 +154,14 @@ if not os.path.exists('hist'):
 
 if data_file == 'wdbc.data':
 	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
-	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns, 4, 3)
+	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns)
 	for col_name in data.columns:						#Plotting a histogram for each feature 
 		if col_name != 'Diagnosis':
 			print('\n Plotting histogramme for ', col_name, ' into /hist/')
 			plot_hist(data[col_name], col_name, 'hist')
 else:
 	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
-	plot_histograms(data, data.columns, 4, 4)
+	plot_histograms(data, data.columns)
 	for col_name in data.columns:						#Plotting a histogram for each feature
 		print('\n Plotting histogramme for ', col_name, ' into /hist/')
 		plot_hist(data[col_name], col_name, 'hist')
