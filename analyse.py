@@ -88,19 +88,19 @@ def find_mean_std(P):
 	print('\n std of each measurment:\n', std_feature)
 
 
-def plot_histograms(df, columns):
+def plot_histograms(df, columns, folder, name):
 	'''Histogram all in one figure'''
 	l = len(columns)
 	n_cols = math.ceil(math.sqrt(l))		#Calculating scaling for any number of features
 	n_rows = math.ceil(l / n_cols)
-	print('n_cols = ', n_cols, 'rows = ', n_rows)
-
+	
 	fig=plt.figure()
 	for i, col_name in enumerate(columns):
 		ax=fig.add_subplot(n_rows,n_cols,i+1)
 		df[col_name].hist(bins=10,ax=ax)
 		ax.set_title(col_name)
 	fig.tight_layout() 
+	plt.savefig("./{0}/all_hist_{1}.png".format(folder,name), bbox_inches='tight')
 	plt.show()
 
 
@@ -108,7 +108,7 @@ def plot_hist(features, name, folder):
 	'''Histogram for each feature'''
 	fig = plt.figure()
 	plt.hist(features)
-	plt.savefig((f"./{folder}/{name}.png"), bbox_inches='tight')
+	plt.savefig("./{0}/{1}.png".format(folder,name), bbox_inches='tight')
 	plt.close('all')
 
 
@@ -118,7 +118,7 @@ def plot_scatter(feature1, feature2, name1, name2, folder):
 	plt.xlabel(name1)
 	plt.ylabel(name2)
 	plt.scatter(feature1, feature2)
-	plt.savefig((f"./{folder}/{name1}-{name2}.png"), bbox_inches='tight')
+	plt.savefig(("./{0}/{1}-{2}.png".format(folder, name1, name2)), bbox_inches='tight')
 	plt.close('all')
 	
 def plot_corr(data_frame, size, folder, file_n):
@@ -127,7 +127,7 @@ def plot_corr(data_frame, size, folder, file_n):
 	ax.matshow(data_frame)
 	plt.xticks(range(len(data_frame.columns)), data_frame.columns)
 	plt.yticks(range(len(data_frame.columns)), data_frame.columns)
-	plt.savefig((f"./{folder}/{file_n}.png"), bbox_inches='tight')
+	plt.savefig(("./{0}/{1}.png".format(folder,file_n)), bbox_inches='tight')
 	plt.close('all')
 
 
@@ -154,14 +154,14 @@ if not os.path.exists('hist'):
 
 if data_file == 'wdbc.data':
 	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
-	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns)
+	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns, 'hist', data_file)
 	for col_name in data.columns:						#Plotting a histogram for each feature 
 		if col_name != 'Diagnosis':
 			print('\n Plotting histogramme for ', col_name, ' into /hist/')
 			plot_hist(data[col_name], col_name, 'hist')
 else:
 	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
-	plot_histograms(data, data.columns)
+	plot_histograms(data, data.columns, 'hist', data_file)
 	for col_name in data.columns:						#Plotting a histogram for each feature
 		print('\n Plotting histogramme for ', col_name, ' into /hist/')
 		plot_hist(data[col_name], col_name, 'hist')
