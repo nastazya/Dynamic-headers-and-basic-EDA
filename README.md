@@ -17,6 +17,22 @@ where  `<data_file>` is mandatory and `<-d header_file>` is optional
 - corr		- for correlations heatmap
 
 
+## Instructions for running analyse.py using Docker
+**1) Copy to local repository:**
+- analyse.py 
+- wdbc.data (default data file no file was provided)
+- Dockerfile
+- test_noheader.txt and header_5.txt to test adding the header from a file
+- add any data file you want to test
+
+**2) Run the script in this format:**
+```
+docker build -t <image_name> <path>
+docker run -it <image_name> <data_file> <-d header_file>
+```
+where  `<data_file>` is mandatory and `<-d header_file>` is optional
+if no files were provided the script will analyse wdbc.data
+
 
 ## Pseudocode for analyse.py
 **1) Download the data to local directory:**
