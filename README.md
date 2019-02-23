@@ -35,7 +35,7 @@ docker run -it <image_name> <data_file> <-d header_file>
 where  `<data_file>` is mandatory and `<-d header_file>` is optional
 if no files were provided the script will analyse wdbc.data
 
-**3) Don't observe any plots until I know how to use volume mounting:**
+**3) Don't observe any plots until I learn how to use volume mounting**
 
 
  
