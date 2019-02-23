@@ -1,3 +1,8 @@
+## Instructions for running analyse.py from bash
+
+
+
+## Pseudocode
 **1) Download the data to local directory:**
 
 **2) Set up dynamic file input using:**
