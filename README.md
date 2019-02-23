@@ -1,3 +1,45 @@
+
+## Instructions for running analyse.py from bash
+
+**1) Copy to local repository:**
+- analyse.py 
+- test_noheader.txt and header_5.txt to test adding the header from a file
+- add any data file you want to test
+
+**2) Run the script in this format:**
+```
+python analyse.py <data_file> <-d header_file>
+```
+where  `<data_file>` is mandatory and `<-d header_file>` is optional
+
+**3) Observe resulting plots in the following folders:**
+- hist 		- for histograms
+- scatter 	- for scatter plots
+- corr		- for correlations heatmap
+
+
+
+## Instructions for running analyse.py using Docker
+**1) Copy to local repository:**
+- analyse.py 
+- wdbc.data (default data file if no file was provided)
+- Dockerfile
+- test_noheader.txt and header_5.txt to test adding the header from a file
+- add any data file you want to test
+
+**2) Run the script in this format:**
+```
+docker build -t <image_name> <path>
+docker run -it <image_name> <data_file> <-d header_file>
+```
+where  `<data_file>` is mandatory and `<-d header_file>` is optional
+if no files were provided the script will analyse wdbc.data
+
+**3) Don't observe any plots until I know how to use volume mounting:**
+
+
+ 
+## Pseudocode for analyse.py
 **1) Download the data to local directory:**
 
 **2) Set up dynamic file input using:**
