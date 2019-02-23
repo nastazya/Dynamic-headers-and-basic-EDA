@@ -3,9 +3,9 @@
 **1) Copy to local repository:**
 - analyse.py 
 - test_noheader.txt and header_5.txt to test adding the header from a file
-- any data file you want to test
+- add any data file you want to test
 
-**2) Run the script in this format: **
+**2) Run the script in this format:**
 ```
 python analyse.py <data_file> <-d header_file>
 ```
