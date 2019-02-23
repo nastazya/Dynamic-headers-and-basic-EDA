@@ -1,4 +1,4 @@
-##
+
 ## Instructions for running analyse.py from bash
 
 **1) Copy to local repository:**
@@ -17,7 +17,8 @@ where  `<data_file>` is mandatory and `<-d header_file>` is optional
 - scatter 	- for scatter plots
 - corr		- for correlations heatmap
 
-## 
+
+
 ## Instructions for running analyse.py using Docker
 **1) Copy to local repository:**
 - analyse.py 
@@ -36,7 +37,8 @@ if no files were provided the script will analyse wdbc.data
 
 **3) Don't observe any plots until I know how to use volume mounting:**
 
-## 
+
+ 
 ## Pseudocode for analyse.py
 **1) Download the data to local directory:**
 
