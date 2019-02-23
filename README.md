@@ -17,7 +17,8 @@ where  `<data_file>` is mandatory and `<-d header_file>` is optional
 - corr		- for correlations heatmap
 
 
-## Pseudocode
+
+## Pseudocode for analyse.py
 **1) Download the data to local directory:**
 
 **2) Set up dynamic file input using:**
