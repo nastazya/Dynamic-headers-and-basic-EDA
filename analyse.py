@@ -51,7 +51,7 @@ def read_data(file,h_file):
 			data.columns = header
 	else:								# if there is no header file we generate column names like A, B..., AA, BB...
 		print("\n Dataset doesn't have nether header nor header file. It will be generated automatically \n")	
-		data = pd.read_csv(file, sep='\s+|,', header=None)
+		data = pd.read_csv(file, sep='\s+|,', header=None, engine='python')
 		s = list(string.ascii_uppercase)
 		col_number = len(data.columns)
 		print(col_number)
@@ -81,8 +81,8 @@ def check_header(file):
 
 def find_mean_std(P):
 	'''Calculating mean and std for each of 30 features'''
-	ave_feature = np.mean(P.iloc[:,2:],axis=0) 				
-	std_feature = np.std(P.iloc[:,2:].astype(float),axis=0) 
+	ave_feature = np.mean(P) 		
+	std_feature = np.std(P) 
 
 	print('\n ave of each measurment:\n', ave_feature)
 	print('\n std of each measurment:\n', std_feature)
