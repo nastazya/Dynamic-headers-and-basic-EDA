@@ -99,6 +99,8 @@ def plot_histograms(df, columns, folder, name):
 		ax=fig.add_subplot(n_rows,n_cols,i+1)
 		df[col_name].hist(bins=10,ax=ax)
 		ax.set_title(col_name)
+		#ax.set_xlabel('value')
+		#ax.set_ylabel('number')
 	fig.tight_layout() 
 	plt.savefig("./{0}/all_hist_{1}.png".format(folder,name), bbox_inches='tight')
 	plt.show()
@@ -108,8 +110,38 @@ def plot_hist(features, name, folder):
 	'''Histogram for each feature'''
 	fig = plt.figure()
 	plt.hist(features)
+	plt.xlabel('value')
+	plt.ylabel('number')
 	plt.savefig("./{0}/{1}.png".format(folder,name), bbox_inches='tight')
 	plt.close('all')
+
+
+def plot_histograms_grouped(dff, columns, gr_feature, folder, name):
+	'''Histogram: all features in one figure grouped by one element'''
+	
+	df = dff											# Creating a copy of data to be able to manipulate it without changing the data
+	l = len(columns)
+	n_cols = math.ceil(math.sqrt(l))					# Calculating scaling for any number of features
+	n_rows = math.ceil(l / n_cols)
+	fig=plt.figure()
+
+	df.index = np.arange(0,len(df))						# Setting indexes to integers (only needed if we use reset_index later)
+									
+	idx = 0
+	for i, col_name in enumerate(columns):									# Going through all the features
+		idx = idx+1
+		if col_name != gr_feature:											# Avoiding a histogram of the grouping element
+			ax=fig.add_subplot(n_rows,n_cols,idx)
+			ax.set_title(col_name)
+			#grouped = df.reset_index().pivot('index',gr_feature,col_name)	# This grouping is useful when we want to build histograms for each grouped item in the same time in different subplots. Here no need as I do it inside the for loop for each one on the same plot  
+			grouped = df.pivot(columns='Diagnosis', values=col_name)
+			for j, gr_feature_name in enumerate(grouped.columns):			# Going through the values of grouping feature (here malignant and benign)
+				grouped[gr_feature_name].hist(alpha=0.5, label=gr_feature_name)
+			plt.legend(loc='upper right')
+		else: idx = idx-1
+	fig.tight_layout() 
+	plt.savefig("./{0}/all_hist_grouped_{1}.png".format(folder,name), bbox_inches='tight')
+	plt.show()
 
 
 def plot_scatter(feature1, feature2, name1, name2, folder):
@@ -153,9 +185,11 @@ if not os.path.exists('hist'):
 	os.makedirs('hist')
 
 if data_file == 'wdbc.data':
-	print('\n Plotting all histograms into one figure')	#Plotting one histogram for all the features
+	print('\n Plotting all histograms into one figure')						#Plotting one histogram for all the features
 	plot_histograms(data.iloc[:,1:11], data.iloc[:,1:11].columns, 'hist', data_file)
-	for col_name in data.columns:						#Plotting a histogram for each feature 
+	print('\n Plotting all histograms into one figure grouped by diagnosis')#Plotting one histogram for all the features grouped by diagnosis
+	plot_histograms_grouped(data.iloc[:,:11], data.iloc[:,:11].columns, 'Diagnosis', 'hist', data_file)
+	for col_name in data.columns:											#Plotting a histogram for each feature 
 		if col_name != 'Diagnosis':
 			print('\n Plotting histogramme for ', col_name, ' into /hist/')
 			plot_hist(data[col_name], col_name, 'hist')
