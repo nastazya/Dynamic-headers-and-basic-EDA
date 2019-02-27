@@ -3,6 +3,7 @@
 
 **1) Copy to local repository:**
 - analyse.py 
+- wdbc.data to test histograms for the grouped data
 - test_noheader.txt and header_5.txt to test adding the header from a file
 - add any data file you want to test
 
@@ -22,7 +23,7 @@ where  `<data_file>` is mandatory and `<-d header_file>` is optional
 ## Instructions for running analyse.py using Docker
 **1) Copy to local repository:**
 - analyse.py 
-- wdbc.data (default data file if no file was provided)
+- wdbc.data (default data file if no file was provided,  histograms for the features grouped by diagnosis)
 - Dockerfile
 - test_noheader.txt and header_5.txt to test adding the header from a file
 - add any data file you want to test
