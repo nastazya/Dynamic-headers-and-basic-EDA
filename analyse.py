@@ -8,9 +8,7 @@ import csv
 import matplotlib.pyplot as plt
 import string
 import math
-#import tkinter as tk 
-import wx 
-
+#import wx
 
 def parser_assign():
 	'''Setting up parser for the file name and header file name '''
@@ -93,15 +91,16 @@ def find_mean_std(P):
 
 def plot_histograms(df, columns, folder, name):
 	'''Histogram all in one figure'''
-	app = wx.App(False)
-	width, height = wx.GetDisplaySize()		# Getting screen dimentions
-	plt.switch_backend('wxAgg')				# In order to maximize the plot later by using plt.get_current_fig_manager()
+	#app = wx.App(False)
+	#width, height = wx.GetDisplaySize()		# Getting screen dimentions
+	#plt.switch_backend('wxAgg')				# In order to maximize the plot later by using plt.get_current_fig_manager()
 
 	l = len(columns)
 	n_cols = math.ceil(math.sqrt(l))		#Calculating scaling for any number of features
 	n_rows = math.ceil(l / n_cols)
 	
-	fig=plt.figure(figsize=(width/100., height/100.), dpi=100)
+	#fig=plt.figure(figsize=(width/100., height/100.), dpi=100)
+	fig=plt.figure(figsize=(11, 6), dpi=100)
 	for i, col_name in enumerate(columns):
 		ax=fig.add_subplot(n_rows,n_cols,i+1)
 		df[col_name].hist(bins=10,ax=ax)
@@ -110,8 +109,8 @@ def plot_histograms(df, columns, folder, name):
 		#ax.set_ylabel('number')
 	fig.tight_layout() 
 	plt.savefig("./{0}/all_hist_{1}.png".format(folder,name), bbox_inches='tight')
-	mng = plt.get_current_fig_manager()
-	mng.frame.Maximize(True)
+	#mng = plt.get_current_fig_manager()
+	#mng.frame.Maximize(True)
 	plt.show()
 
 def plot_hist(features, name, folder):
@@ -126,21 +125,22 @@ def plot_hist(features, name, folder):
 
 def plot_histograms_grouped(dff, columns, gr_feature, folder, name):
 	'''Histogram: all features in one figure grouped by one element'''
-	app = wx.App(False)
-	width, height = wx.GetDisplaySize()		# Getting screen dimentions
-	plt.switch_backend('wxAgg')				# In order to maximize the plot later by using plt.get_current_fig_manager()
+	#app = wx.App(False)
+	#width, height = wx.GetDisplaySize()		# Getting screen dimentions
+	#plt.switch_backend('wxAgg')				# In order to maximize the plot later by using plt.get_current_fig_manager()
 
-	df = dff									# Creating a copy of data to be able to manipulate it without changing the data
+	df = dff								# Creating a copy of data to be able to manipulate it without changing the data
 	l = len(columns)
-	n_cols = math.ceil(math.sqrt(l))			# Calculating scaling for any number of features
+	n_cols = math.ceil(math.sqrt(l))		# Calculating scaling for any number of features
 	n_rows = math.ceil(l / n_cols)
 	
-	fig=plt.figure(figsize=(width/100., height/100.), dpi=100)
+	#fig=plt.figure(figsize=(width/100., height/100.), dpi=100)
+	fig=plt.figure(figsize=(11, 6), dpi=100)
 	df.index = np.arange(0,len(df))				# Setting indexes to integers (only needed if we use reset_index later)
 	idx = 0
-	for i, col_name in enumerate(columns):									# Going through all the features
+	for i, col_name in enumerate(columns):		# Going through all the features
 		idx = idx+1
-		if col_name != gr_feature:											# Avoiding a histogram of the grouping element
+		if col_name != gr_feature:				# Avoiding a histogram of the grouping element
 			ax=fig.add_subplot(n_rows,n_cols,idx)
 			ax.set_title(col_name)
 			#grouped = df.reset_index().pivot('index',gr_feature,col_name)	# This grouping is useful when we want to build histograms for each grouped item in the same time in different subplots. Here no need as I do it inside the for loop for each one on the same plot  
@@ -151,8 +151,8 @@ def plot_histograms_grouped(dff, columns, gr_feature, folder, name):
 		else: idx = idx-1
 	fig.tight_layout() 
 	plt.savefig("./{0}/all_hist_grouped_{1}.png".format(folder,name), bbox_inches='tight')
-	mng = plt.get_current_fig_manager()
-	mng.frame.Maximize(True)
+	#mng = plt.get_current_fig_manager()
+	#mng.frame.Maximize(True)
 	plt.show()
 
 
