@@ -34,7 +34,7 @@ def read_data(file,h_file):
 	
 	elif check_header(file):			# if data has header
 		print("\n Dataset has it's header \n")		
-		data = pd.read_csv(file, sep='\s+|,')
+		data = pd.read_csv(file, sep='\s+|,', engine='python')
 	
 	elif os.path.isfile(h_file):		# if header file was provided
 		print("\n Dataset header will be generated from it's provided header file \n")	
@@ -47,7 +47,7 @@ def read_data(file,h_file):
 			firstline = firstline.replace("  "," ")     # Remove spaces
 			header = list(firstline.split(' '))			# Split string to a list
 			
-			data = pd.read_csv(file, sep='\s+|,', header=None)
+			data = pd.read_csv(file, sep='\s+|,', header=None, engine='python')
 			assert len(data.columns) == len(header), 'Number of columns is not equal to number of column names in header file.'
 			data.columns = header
 	else:								# if there is no header file we generate column names like A, B..., AA, BB...
